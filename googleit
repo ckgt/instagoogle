@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#
+# CK
+#
+# Get whatever is selected anywhere in any app and google it!
+# Google anything anywhere all the time!
+#
+# Requires:  xclip   perl   google-chrome
+#
+# USE:
+# Bind to keyboard shortcut in desktop. ctrl+g works nicely.
+# Select any text anywhere in an app or on the desktop.
+# Use the shortcut and a browser opens.
+#
+
+
+# Get selection/clipboard data
+CLIPBOARD=`xclip -o -selection primary`
+
+# If full, search google
+if [[ `echo "$CLIPBOARD" | wc -c` == "0" ]] ; then
+	echo "No clipboard"
+else
+	#echo "$CLIPBOARD"
+	URL=https://www.google.com
+	ARG="$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$CLIPBOARD")"
+	QSTRING="$URL/search?num=50&q=$ARG"
+	google-chrome "$QSTRING"
+fi
