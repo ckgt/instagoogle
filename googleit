@@ -19,7 +19,7 @@
 CLIPBOARD=`xclip -o -selection primary`
 
 # If full, search google
-if [[ `echo "$CLIPBOARD" | wc -c` == "0" ]] ; then
+if [[ "${#CLIPBOARD}" == "0" ]] ; then
 	echo "No clipboard"
 else
 	#echo "$CLIPBOARD"
